@@ -2,134 +2,198 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>First Traders - Connexion</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Valentino Crew | Connexion</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght=700&family=Roboto:wght=400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
-        * { box-sizing: border-box; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
-        body { margin: 0; background: #ffffff; height: 100vh; display: flex; flex-direction: column; align-items: center; padding-top: 60px; color: #00A651; }
-        .logo { font-size: 50px; font-weight: 900; color: #00A651; margin-bottom: 10px; letter-spacing: 3px; }
-        .subtitle { font-size: 14px; color: #666; margin-bottom: 50px; }
-        .container { width: 90%; max-width: 400px; }
-        .input-box { border: 1.5px solid #00A651; border-radius: 12px; display: flex; align-items: center; margin-bottom: 20px; padding: 12px 15px; color: #000; }
-        .prefix { font-weight: bold; margin-right: 10px; border-right: 1px solid #ddd; padding-right: 10px; display: flex; align-items: center; gap: 5px; color: #00A651; }
-        input { border: none; outline: none; width: 100%; font-size: 16px; background: transparent; color: #000; }
-        
-        .btn-submit { 
-            background: #00A651; 
-            color: #fff; 
-            border: none; 
-            width: 100%; 
-            padding: 16px; 
-            border-radius: 30px; 
-            font-size: 18px; 
-            font-weight: bold; 
-            margin-top: 20px; 
-            cursor: pointer; 
-            box-shadow: 0 4px 10px rgba(0,166,81,0.2); 
+        body { 
+            font-family: 'Roboto', sans-serif; 
+            background-color: #e30613; 
+            color: white;
+        }
+
+        .logo-wrapper { text-align: center; margin-bottom: 30px; }
+        .logo-container {
+            display: inline-block;
+            background: #facc15; /* Fond Jaune */
+            padding: 10px 20px;
+            border: 3px solid white;
+            border-radius: 8px;
+            position: relative;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        .v-top {
+            background: #facc15;
+            border: 3px solid white;
+            border-bottom: none;
+            width: 40px;
+            height: 40px;
+            position: absolute;
+            top: -38px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e30613;
+            font-family: 'Oswald', sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            border-radius: 5px 5px 0 0;
+        }
+        .main-text {
+            color: #e30613;
+            font-family: 'Oswald', sans-serif;
+            font-size: 28px;
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: bold;
+        }
+        .slogan {
+            color: #facc15; /* Slogan Jaune */
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 8px;
+            letter-spacing: 1.5px;
+        }
+
+        .input-group {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            border: 2px solid #facc15; /* Contour Jaune */
+        }
+        .input-group input {
+            background: transparent;
+            border: none;
+            width: 100%;
+            color: #333;
+            outline: none;
+            font-size: 16px;
+        }
+        .input-group span {
+            color: #e30613;
+            font-weight: bold;
+            margin-right: 10px;
+            border-right: 1px solid #ccc;
+            padding-right: 10px;
+        }
+
+        .btn-login {
+            background-color: #facc15; /* Bouton Jaune */
+            color: #e30613; /* Texte Rouge */
+            width: 100%;
+            padding: 15px;
+            border-radius: 50px;
+            font-weight: 900;
+            text-transform: uppercase;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             transition: 0.3s;
         }
-        .btn-submit:active { transform: scale(0.98); opacity: 0.8; }
-
-        .link { margin-top: 25px; text-align: center; }
-        .link a { color: #666; text-decoration: none; font-size: 15px; cursor: pointer; }
-        .link a span { color: #00A651; font-weight: bold; text-decoration: underline; }
+        .btn-login:active { transform: scale(0.98); }
     </style>
 </head>
-<body>
+<body class="flex items-center justify-center min-h-screen p-6">
 
-    <div class="logo">First Traders</div>
-    <div class="subtitle">Solutions d'Investissement Premium</div>
+    <div class="w-full max-w-sm">
+        <div class="logo-wrapper">
+            <div class="logo-container">
+                <div class="v-top">V</div>
+                <div class="main-text">
+                    VALENTINO <i class="fa-solid fa-crown text-xl text-[#e30613]"></i> CREW
+                </div>
+            </div>
+            <div class="slogan">L'Élite des Investisseurs</div>
+        </div>
 
-    <div class="container">
+        <p class="text-center mb-8 font-bold text-lg uppercase tracking-widest text-[#facc15]">Connexion</p>
+
         <form id="loginForm">
-            <div class="input-box">
-                <div class="prefix"><i class="fas fa-mobile-alt"></i> +243</div>
-                <input type="tel" id="phone" placeholder="Numéro de téléphone" required>
+            <div class="input-group">
+                <span>+243</span>
+                <input type="tel" id="phone" placeholder="Téléphone" required>
             </div>
 
-            <div class="input-box">
-                <i class="fas fa-lock" style="margin-right:15px; color: #00A651;"></i>
-                <input type="password" id="password" placeholder="Mot de passe" required>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="Mot de passe (6 chiffres)" inputmode="numeric" maxlength="6" required>
             </div>
 
-            <button type="submit" class="btn-submit" id="loginBtn">Se connecter</button>
+            <button type="submit" id="loginBtn" class="btn-login">SE CONNECTER</button>
         </form>
 
-        <div class="link">
-            <a href="register.html">Nouveau ici ? <span>Créer un compte ></span></a>
+        <div class="mt-8 text-center">
+            <p class="text-sm text-white">Pas encore de compte ? <br>
+                <a href="register.html" class="font-bold text-[#facc15] underline">Créez-en un ici</a>
+            </p>
         </div>
     </div>
 
     <script>
-        const dbUrl = "https://first-traders-default-rtdb.firebaseio.com/users";
+        // CONFIGURATION DE TA BASE DE DONNÉES (Inchangée)
+        const firebaseConfig = {
+            databaseURL: "https://firstsolar-e2ba3-default-rtdb.firebaseio.com/"
+        };
+        
+        if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
+        const db = firebase.database();
 
-        document.getElementById('loginForm').addEventListener('submit', async (e) => {
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
             e.preventDefault();
             
+            const phone = document.getElementById('phone').value.trim();
+            const password = document.getElementById('password').value;
             const btn = document.getElementById('loginBtn');
-            const phoneInput = document.getElementById('phone').value.trim();
-            const passwordInput = document.getElementById('password').value;
-            const fullPhone = "+243" + phoneInput;
 
-            btn.innerText = "Vérification...";
             btn.disabled = true;
+            btn.innerText = "CONNEXION...";
 
-            try {
-                // MODIFICATION ICI : On va directement chercher la clé correspondant au numéro de téléphone
-                const response = await fetch(`${dbUrl}/${fullPhone}.json`);
-                const userFound = await response.json();
+            // Recherche dans le dossier 'users'
+            db.ref('users').orderByChild('phone').equalTo(phone).once('value', snapshot => {
+                if (snapshot.exists()) {
+                    let userFound = false;
+                    let userId = "";
 
-                if (userFound !== null) {
-                    // Le numéro existe, on vérifie le mot de passe
-                    if (userFound.password === passwordInput) {
-                        localStorage.setItem('userPhone', fullPhone);
-                        localStorage.setItem('isLoggedIn', 'true');
-                        window.location.href = 'dashboard.html';
+                    snapshot.forEach(childSnapshot => {
+                        const userData = childSnapshot.val();
+                        if (userData.password === password) {
+                            userFound = true;
+                            userId = childSnapshot.key;
+                        }
+                    });
+
+                    if (userFound) {
+                        // Sauvegarde des infos pour les autres pages
+                        localStorage.setItem('userId', userId);
+                        localStorage.setItem('userPhone', phone);
+                        
+                        // Redirection vers le Dashboard
+                        window.location.href = "dashboard.html";
                     } else {
                         alert("Mot de passe incorrect.");
-                        btn.innerText = "Se connecter";
                         btn.disabled = false;
+                        btn.innerText = "SE CONNECTER";
                     }
                 } else {
-                    // Si le numéro n'existe pas en clé directe, on fait une vérification de secours sur l'ancienne méthode (au cas où il reste des vieux comptes créés avec POST)
-                    const backResponse = await fetch(`${dbUrl}.json`);
-                    const allUsers = await backResponse.json();
-                    let oldUser = null;
-
-                    if (allUsers) {
-                        for (let id in allUsers) {
-                            if (allUsers[id].phone === fullPhone || allUsers[id].phone === phoneInput) {
-                                oldUser = allUsers[id];
-                                break;
-                            }
-                        }
-                    }
-
-                    if (oldUser) {
-                        if (oldUser.password === passwordInput) {
-                            localStorage.setItem('userPhone', fullPhone);
-                            localStorage.setItem('isLoggedIn', 'true');
-                            window.location.href = 'dashboard.html';
-                            return;
-                        } else {
-                            alert("Mot de passe incorrect.");
-                            btn.innerText = "Se connecter";
-                            btn.disabled = false;
-                            return;
-                        }
-                    }
-
-                    alert("Numéro non inscrit.");
-                    btn.innerText = "Se connecter";
+                    alert("Ce numéro n'est pas enregistré.");
                     btn.disabled = false;
+                    btn.innerText = "SE CONNECTER";
                 }
-            } catch (error) {
-                console.error(error);
-                alert("Erreur de connexion.");
-                btn.innerText = "Se connecter";
+            }).catch(error => {
+                alert("Erreur de connexion : " + error.message);
                 btn.disabled = false;
-            }
+                btn.innerText = "SE CONNECTER";
+            });
         });
     </script>
 </body>
