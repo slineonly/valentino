@@ -3,47 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Valentino Crew | Déposer</title>
+    <title>Kin Marché | Déposer</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Firebase SDK v8 -->
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
     <style>
         body { background-color: #f0f3f7; font-family: sans-serif; padding-bottom: 20px; }
         .text-kin { color: #e60000; }
         .bg-kin { background-color: #e60000; }
-        .header-bar { background: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 2px solid #facc15; }
-        .balance-box { background: #e60000; color: white; margin: 15px; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; border: 2px solid #facc15; }
+        .header-bar { background: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #eee; }
+        .balance-box { background: #001529; color: white; margin: 15px; padding: 20px; border-radius: 15px; display: flex; justify-content: space-between; align-items: center; }
         .amount-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 0 15px; }
         .amount-btn { background: white; border: 1px solid #ddd; padding: 12px 5px; border-radius: 8px; font-weight: bold; font-size: 13px; text-align: center; cursor: pointer; transition: 0.2s; }
-        .amount-btn.active { border-color: #e60000; color: #e60000; background: #fff2f2; transform: scale(0.95); box-shadow: 0 0 0 2px #facc15; }
+        .amount-btn.active { border-color: #e60000; color: #e60000; background: #fff5f5; transform: scale(0.95); }
         .phase { display: none; }
         .phase.active { display: block; }
-        .method-card { background: white; margin: 10px 15px; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 2px solid #eee; cursor: pointer; }
-        .method-card:hover { border-color: #facc15; }
+        .method-card { background: white; margin: 10px 15px; padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; border: 1px solid #eee; cursor: pointer; }
         .method-logo { width: 40px; height: 40px; object-fit: contain; }
-        .btn-main { background: #facc15; color: #e60000; width: 90%; margin: 20px auto; display: block; padding: 15px; border-radius: 30px; font-weight: 900; text-align: center; border: none; cursor: pointer; text-transform: uppercase; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .btn-main { background: #e60000; color: white; width: 90%; margin: 20px auto; display: block; padding: 15px; border-radius: 30px; font-weight: bold; text-align: center; border: none; cursor: pointer; }
         .input-field { width: 90%; margin: 10px auto; display: block; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; }
-        .input-field:focus { outline: none; border-color: #e60000; box-shadow: 0 0 0 2px #facc15; }
-        .border-dashed-custom { border: 2px dashed #facc15; }
+        .input-field:focus { outline: none; border-color: #e60000; }
     </style>
 </head>
 <body>
 
+    <!-- Header -->
     <div class="header-bar">
         <a href="profil.html"><i class="fas fa-chevron-left text-gray-600"></i></a>
-        <span class="font-black text-[#e60000] italic">VALENTINO DÉPÔT</span>
-        <a href="historique_depot.html" class="text-gray-500 text-sm font-bold">Historique</a>
+        <span class="font-bold">Dépôt</span>
+        <a href="historique_depot.html" class="text-gray-500 text-sm">Historique</a>
     </div>
 
+    <!-- Solde Actuel -->
     <div class="balance-box">
         <div>
-            <p class="text-xs opacity-90 font-bold uppercase tracking-wider">Solde du compte</p>
-            <p id="current-balance" class="text-xl font-black">FC 0.00</p>
+            <p class="text-xs opacity-70">Solde du compte</p>
+            <p id="current-balance" class="text-xl font-bold">FC 0.00</p>
         </div>
-        <i class="fas fa-university text-3xl opacity-30 text-white"></i>
+        <i class="fas fa-university text-3xl opacity-20"></i>
     </div>
 
+    <!-- PHASE 1 : CHOISIR LE MONTANT -->
     <div id="phase1" class="phase active">
         <div class="px-4 mb-4 flex items-center gap-2">
             <i class="fas fa-check-circle text-kin"></i>
@@ -61,25 +63,26 @@
         </div>
 
         <div class="p-4">
-            <p class="text-xs font-bold mb-2 text-gray-600">Dépôts personnalisés</p>
+            <p class="text-xs font-bold mb-2">Dépôts personnalisés</p>
             <input type="number" id="custom-amount" class="input-field" placeholder="Veuillez saisir le montant">
-            <p class="text-red-500 text-[10px] mt-1 ml-4 font-bold">Montant minimum : FC 10000.00</p>
+            <p class="text-red-500 text-[10px] mt-1 ml-4">Montant minimum : FC 10000.00</p>
         </div>
 
-        <button onclick="goToPhase2()" class="btn-main">Déposer maintenant</button>
+        <button onclick="goToPhase2()" class="btn-main shadow-lg shadow-red-200">Déposer maintenant</button>
     </div>
 
+    <!-- PHASE 2 : CHOISIR LE RÉSEAU -->
     <div id="phase2" class="phase">
         <div class="px-4 mb-4">
-            <button onclick="backToPhase1()" class="text-xs text-gray-500 font-bold mb-4"><i class="fas fa-arrow-left"></i> Retour</button>
+            <button onclick="backToPhase1()" class="text-xs text-gray-500 mb-4"><i class="fas fa-arrow-left"></i> Retour</button>
             <p class="font-bold text-sm">Sélectionner le mode de paiement</p>
         </div>
 
-        <div class="method-card" onclick="selectNetwork('Orange Money', '0802667704')">
+        <div class="method-card" onclick="selectNetwork('Orange Money', '0849802900')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c8/Orange_logo.svg" class="method-logo">
             <span class="font-bold">Orange Money</span>
         </div>
-        <div class="method-card" onclick="selectNetwork('Airtel Money', '0992683260')">
+        <div class="method-card" onclick="selectNetwork('Airtel Money', '0962154497')">
             <img src="https://upload.wikimedia.org/wikipedia/commons/f/f1/Airtel_logo.svg" class="method-logo">
             <span class="font-bold">Airtel Money</span>
         </div>
@@ -89,21 +92,22 @@
         </div>
     </div>
 
+    <!-- PHASE 3 : INSTRUCTIONS & VALIDATION -->
     <div id="phase3" class="phase">
-        <div class="p-4 bg-white m-4 rounded-xl border-dashed-custom bg-white">
-            <p class="text-center font-black text-kin mb-2 text-lg uppercase">Instructions de transfert</p>
-            <p class="text-[12px] text-gray-600 text-center mb-4 font-medium">Copiez le numéro et effectuez le transfert manuellement sur votre téléphone.</p>
+        <div class="p-4 bg-white m-4 rounded-xl border border-dashed border-kin">
+            <p class="text-center font-bold text-kin mb-2">Instructions de transfert</p>
+            <p class="text-[12px] text-gray-600 mb-4">Copiez le numéro et effectuez le transfert manuellement sur votre téléphone.</p>
             
-            <div class="bg-gray-100 p-3 rounded flex justify-between items-center mb-4 border border-gray-200">
-                <span id="display-network" class="font-black text-xs uppercase text-gray-500"></span>
-                <span id="platform-number" class="font-black text-lg text-gray-800">---</span>
-                <button onclick="copyNumber()" class="text-kin text-xs font-black bg-yellow-300 px-3 py-1 rounded-full uppercase">Copier</button>
+            <div class="bg-gray-100 p-3 rounded flex justify-between items-center mb-4">
+                <span id="display-network" class="font-bold text-xs uppercase text-gray-500"></span>
+                <span id="platform-number" class="font-bold text-lg">---</span>
+                <button onclick="copyNumber()" class="text-kin text-xs font-bold">Copier</button>
             </div>
 
             <input type="text" id="transaction-id" class="input-field" placeholder="ID de la transaction (Preuve)">
             <input type="tel" id="sender-number" class="input-field" placeholder="Votre numéro de téléphone">
             
-            <button id="submit-btn" onclick="submitRecharge()" class="btn-main mt-4" style="background: #e60000; color: white;">Envoyer ma demande</button>
+            <button id="submit-btn" onclick="submitRecharge()" class="btn-main">Envoyer ma demande</button>
         </div>
     </div>
 
